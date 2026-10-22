@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>m68k · RTL-схема</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="layout">
+  <main id="stage">
+    <canvas id="c" aria-label="RTL-схема процессора m68k"></canvas>
+    <div id="tip" class="tip" role="dialog" aria-live="polite" hidden></div>
+    <div class="zoom">
+      <button id="out" type="button" aria-label="Отдалить">−</button>
+      <span id="pct" class="pct">100%</span>
+      <button id="in" type="button" aria-label="Приблизить">+</button>
+      <button id="fit" type="button" aria-label="Вписать схему">⤢</button>
+    </div>
+  </main>
+  <aside id="side">
+    <div class="head">
+      <div class="brand">m68k<span>·</span>RTL</div>
+      <div class="author">Лишик Александра Юрьевна, P3206</div>
+      <button id="help" class="help" type="button">Справка</button>
+    </div>
+    <div class="label">Команды</div>
+    <input id="filter" type="search" placeholder="Найти команду…" aria-label="Поиск команды" autocomplete="off">
+    <div id="cmds"></div>
+    <div class="now">
+      <div id="info"></div>
+      <div class="controls">
+        <button id="restart" type="button" aria-label="С начала">⟲</button>
+        <button id="play" class="primary" type="button" aria-label="Запуск">▶</button>
+        <button id="step" type="button" aria-label="Один такт">⏭</button>
+        <button id="exit" type="button" aria-label="Выйти">✕</button>
+        <div id="speed" class="speed" role="radiogroup" aria-label="Скорость">
+          <button type="button" role="radio" data-v="0.5" aria-checked="false">0.5×</button>
+          <button type="button" role="radio" data-v="1" aria-checked="true">1×</button>
+          <button type="button" role="radio" data-v="2" aria-checked="false">2×</button>
+          <button type="button" role="radio" data-v="4" aria-checked="false">4×</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div id="intro" class="modal-back" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="modal-head">
+      <div>
+        <h2 id="introTitle">Справка</h2>
+        <p>Все команды m68k из wrench и как пользоваться схемой</p>
+      </div>
+      <button id="introClose" class="modal-x" type="button" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="cmds">Команды</button>
+      <button type="button" role="tab" data-tab="howto">Как пользоваться</button>
+    </div>
+    <div id="introBody" class="modal-body"></div>
+    <div class="modal-foot">
+      <button id="storyAgain" class="pill-link" type="button">Показать историю Шаромыши</button>
+      <button id="introGo" class="go" type="button">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<div id="story" class="screen story" role="dialog" aria-modal="true" aria-labelledby="storyTitle" hidden>
+  <div class="story-stage">
+    <img class="story-mouse" src="img/mouse.png" alt="Шаромышь">
+    <div class="bubble" id="bubble">
+      <h2 id="storyTitle"></h2>
+      <p id="storyText"></p>
+    </div>
+  </div>
+  <div class="story-nav">
+    <button id="storySkip" class="pill ghost" type="button">Пропустить</button>
+    <div class="dots" id="storyDots"></div>
+    <div class="story-btns">
+      <button id="storyPrev" class="round ghost" type="button" aria-label="Назад">←</button>
+      <button id="storyNext" class="pill hot" type="button">Дальше →</button>
+    </div>
+  </div>
+</div>
+
+<div id="boot" class="screen boot" aria-live="polite">
+  <div class="boot-wrap">
+    <div class="boot-logo">m68k<span>·</span>мыши</div>
+    <div class="boot-sub">RTL-схема процессора m68k-neumann-microcode</div>
+    <div class="boot-track">
+      <div class="boot-fill" id="bootFill"></div>
+      <div class="boot-runner" id="bootRunner">
+        <img src="img/mouse.png" alt="">
+        <span class="boot-tag">Шаромышь</span>
+      </div>
+    </div>
+    <div class="boot-row"><span id="bootMsg">Будим мышей…</span><span id="bootPct">0%</span></div>
+    <div class="boot-credits">
+      <div class="cr-line c1">при поддержке</div>
+      <div class="cr-studio c2">«Имени Короля Пикчерз»</div>
+      <div class="cr-line c3">представляет</div>
+    </div>
+  </div>
+</div>
+
+<script src="js/vendor/schema.js"></script>
+<script src="js/vendor/programs.js"></script>
+<script src="js/vendor/info.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
